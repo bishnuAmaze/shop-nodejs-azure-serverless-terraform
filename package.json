@@ -10,11 +10,20 @@
     "test": "echo \"No tests yet...\"",
     "publish": "func azure functionapp publish fa-shop-products-service-sea-001 --slot staging"
   },
-  "dependencies": {},
+  "dependencies": {
+    "@azure/cosmos": "^4.0.0",
+    "@faker-js/faker": "^8.4.1",
+    "@types/dotenv": "^8.2.0",
+    "@types/faker": "^6.6.9",
+    "@types/mongodb": "^4.0.7",
+    "dotenv": "^16.4.5",
+    "faker": "^6.6.6",
+    "mongodb": "^6.5.0"
+  },
   "devDependencies": {
     "@azure/functions": "^3.0.0",
+    "@types/node": "^18.19.31",
     "azure-functions-core-tools": "^4.x",
-    "@types/node": "18.x",
     "typescript": "^4.0.0"
   }
 }
