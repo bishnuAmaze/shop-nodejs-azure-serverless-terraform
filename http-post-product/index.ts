@@ -1,5 +1,6 @@
 import { AzureFunction, Context, HttpRequest } from "@azure/functions";
 import { CosmosClient } from "@azure/cosmos";
+import { v4 as uuidv4 } from 'uuid';
 
 // Set up connection string
 const cosmosClient = new CosmosClient(process.env.COSMOSDB_CONNECTION_STRING);
@@ -14,6 +15,7 @@ const httpTrigger: AzureFunction = async function (
 ): Promise<void> {
   // Extract product info from request
   const newProduct = req.body;
+  newProduct["id"] = uuidv4();
 
   // Validate newProduct details. This is a simple validation. You might want to enhance this as required.
   if (
