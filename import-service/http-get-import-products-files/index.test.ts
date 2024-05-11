@@ -5,6 +5,10 @@ describe("HTTP Blob SAS Token Generation", () => {
   let req: Partial<HttpRequest>;
 
   beforeEach(() => {
+    process.env.ACCOUNT_NAME = "testAccount";
+    process.env.ACCOUNT_KEY = "testAccountKey";
+    process.env.CONTAINER_NAME = "testContainerName";
+
     req = {
       query: { name: "testFile.csv" },
       body: {},

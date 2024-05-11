@@ -7,7 +7,7 @@
     "watch": "tsc -w",
     "prestart": "npm run build",
     "start": "func start",
-    "test": "echo \"No tests yet...\""
+    "test": "npx test"
   },
   "dependencies": {
     "@azure/storage-blob": "^12.17.0",
