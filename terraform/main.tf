@@ -16,6 +16,12 @@ resource "azurerm_storage_account" "products_service_fa" {
   account_kind             = "StorageV2"
 
   resource_group_name = azurerm_resource_group.product_service_rg.name
+
+  access_tier                      = "Cool"
+  public_network_access_enabled    = true
+  shared_access_key_enabled        = true
+  allow_nested_items_to_be_public  = true
+  enable_https_traffic_only        = true
 }
 
 resource "azurerm_storage_share" "products_service_fa" {
@@ -162,4 +168,10 @@ resource "azurerm_cosmosdb_mongo_collection" "stock_collection" {
   shard_key           = "product_id"
 
   throughput = 400
+}
+
+resource "azurerm_storage_container" "bkb_uploaded" {
+  name                  = "uploaded-container"
+  storage_account_name  = azurerm_storage_account.products_service_fa.name
+  container_access_type = "private"
 }
