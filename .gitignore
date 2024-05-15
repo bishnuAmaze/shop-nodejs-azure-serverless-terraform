@@ -1,34 +1,56 @@
-# Local .terraform directories
-**/.terraform/*
+bin
+obj
+csx
+.vs
+edge
+Publish
 
-# .tfstate files
-*.tfstate
-*.tfstate.*
+*.user
+*.suo
+*.cscfg
+*.Cache
+project.lock.json
 
-# Crash log files
-crash.log
-crash.*.log
+/packages
+/TestResults
 
-# Exclude all .tfvars files, which are likely to contain sensitive data, such as
-# password, private keys, and other secrets. These should not be part of version 
-# control as they are data points which are potentially sensitive and subject 
-# to change depending on the environment.
-*.tfvars
-*.tfvars.json
+/tools/NuGet.exe
+/App_Data
+/secrets
+/data
+.secrets
+appsettings.json
+local.settings.json
 
-# Ignore override files as they are usually used to override resources locally and so
-# are not checked in
-override.tf
-override.tf.json
-*_override.tf
-*_override.tf.json
+node_modules
+dist
 
-# Include override files you do wish to add to version control using negated pattern
-# !example_override.tf
+# Local python packages
+.python_packages/
 
-# Include tfplan files to ignore the plan output of command: terraform plan -out=tfplan
-# example: *tfplan*
+# Python Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+.funcignore
+.vscode/
+terraform/.terraform
+dist.zip
+host.json
+terraform/.terraform.lock.hcl
+terraform/terraform.tfstate
+terraform/terraform.tfstate.backup
 
-# Ignore CLI configuration files
-.terraformrc
-terraform.rc
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Azurite artifacts
+__blobstorage__
+__queuestorage__
+__azurite_db*__.json
