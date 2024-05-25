@@ -11,7 +11,7 @@ const httpTrigger: AzureFunction = async function (
 ): Promise<void> {
   context.log("ServiceBus queue trigger function processed message", mySbMsg);
 
-  let product = JSON.parse(mySbMsg); // adjust if necessary
+  let product = JSON.parse(mySbMsg);
   await container.items.create(product);
 };
 export default httpTrigger;
