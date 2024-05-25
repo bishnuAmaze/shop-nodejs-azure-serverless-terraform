@@ -1,0 +1,16 @@
+{
+  "bindings": [
+    {
+      "authLevel": "function",
+      "type": "httpTrigger",
+      "direction": "in",
+      "name": "mySbMsg",
+      "subscriptionName": "bkb-pay-as-you-go",
+      "topicName": "csv_products_import_topic",
+      "connection": "SERVICE_BUS_CONNECTION_ENDPOINT",
+      "accessRights": "listen"
+    }
+  ],
+  "scriptFile": "../dist/service-bus-import-product/index.js",
+  "disabled": false
+}

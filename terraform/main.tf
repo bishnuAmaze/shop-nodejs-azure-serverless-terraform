@@ -175,3 +175,37 @@ resource "azurerm_storage_container" "bkb_uploaded" {
   storage_account_name  = azurerm_storage_account.products_service_fa.name
   container_access_type = "private"
 }
+
+resource "azurerm_servicebus_namespace" "sb_message_namespace" {
+  name                = "bkb-sb-namespace"
+  location            = "southeastasia"
+  resource_group_name = azurerm_resource_group.product_service_rg.name
+  sku                 = "Standard"
+}
+
+resource "azurerm_servicebus_queue" "csv_products_import" {
+  name         = "csv-products-import-queue"
+  namespace_id = azurerm_servicebus_namespace.sb_message_namespace.name
+  resource_group_name = azurerm_resource_group.product_service_rg.name
+  enable_partitioning = true
+}
+
+resource "azurerm_servicebus_topic" "csv_products_import_topic" {
+  name         = "csv-products-import-topic"
+  namespace_id = azurerm_servicebus_namespace.sb_message_namespace.name
+}
+
+resource "azurerm_servicebus_subscription" "csv_products_import_subscription" {
+  name               = "csv-products-import-subscription"
+  max_delivery_count = 1
+  topic_id           = azurerm_servicebus_topic.csv_products_import_topic.name
+}
+
+resource "azurerm_servicebus_subscription_rule" "csv_products_import_subscription_rule" {
+  name            = "csv-products-import-subscription-rule"
+  filter_type     = "CorrelationFilter"
+  correlation_filter {
+    label          = "product"
+  }
+  subscription_id = azurerm_servicebus_subscription.csv_products_import_subscription.name
+}

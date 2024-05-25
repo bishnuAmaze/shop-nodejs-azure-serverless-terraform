@@ -12,6 +12,8 @@
   },
   "dependencies": {
     "@azure/cosmos": "^4.0.0",
+    "@azure/service-bus": "^7.9.4",
+    "@azure/storage-blob": "^12.18.0",
     "@faker-js/faker": "^8.4.1",
     "@types/dotenv": "^8.2.0",
     "@types/faker": "^6.6.9",

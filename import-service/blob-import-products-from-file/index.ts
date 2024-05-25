@@ -1,4 +1,5 @@
 import { AzureFunction, Context } from "@azure/functions";
+import { ServiceBusClient } from "@azure/service-bus";
 import {
   BlobServiceClient,
   StorageSharedKeyCredential,
@@ -6,18 +7,12 @@ import {
 import csvParser = require("csv-parser");
 import { Readable } from "stream";
 
+const queueName = "csv_products_import_topic";
+
 const httpTrigger: AzureFunction = async function (
   context: Context,
   req: Readable
 ): Promise<void> {
-  context.log(
-    "Blob trigger function processed a blob \n Name:",
-    context.bindingData.name,
-    "\n Blob Size:",
-    context.bindingData.properties.length,
-    "Bytes"
-  );
-
   const name = context.bindingData.name;
 
   const account = process.env.ACCOUNT_NAME;
@@ -31,20 +26,22 @@ const httpTrigger: AzureFunction = async function (
     sharedKeyCredential
   );
 
-  // Assuming myBlob stream is a CSV file
   req
     .pipe(csvParser())
-    .on("data", (row) => {
+    .on("data", async (row) => {
       // Process each row
-      context.log(`Parsed row: ${JSON.stringify(row)}`);
+      let productAsMessage = JSON.stringify(row);
+      const serviceBusClient = new ServiceBusClient(
+        process.env.SERVICE_BUS_CONNECTION_ENDPOINT
+      );
+      const sender = serviceBusClient.createSender(queueName);
+      await sender.sendMessages([{ body: productAsMessage }]);
+      await sender.close();
     })
     .on("error", (error) => {
-      // Handle error
       context.log.error(`Error reading CSV file: ${error.message}`);
     })
     .on("end", async () => {
-      context.log("Finished reading CSV file");
-
       // Move blob to 'parsed' container
       const sourceContainerClient =
         blobServiceClient.getContainerClient("uploaded");
